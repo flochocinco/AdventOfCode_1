@@ -39,32 +39,76 @@ fun day2(){
     //A X Rock 1pt
     //B Y Paper 2pts
     //C Z Scissors 3pts
-    println("Total Points: " + computePoints(lines!!))
+    println("Total Points Part 1: " + computePoints(lines!!))
 
     //PART 2
-    var modified = mutableListOf<String>()
-    lines.forEach {modified.add(it.replace("X", makeLose(it))) }
+    var pts = 0
+    for(line in lines){
+        pts += if(line.contains("X")){
+            makeLose(line)
+        }else if(line.contains("Y")){
+            makeDraw(line)
+        }else {
+            makeWin(line)
+        }
+    }
+
+    println("Total Points Part 2: $pts")
 }
 
-fun makeLose(input : String) : String {
-    var output:String
-    if(input.contains('A')){
-        output = input.replace("X","Z")
+/**
+ * compute point in order to lose -> compute point of played figure
+ */
+fun makeLose(input : String) : Int {
+    return if(input.contains('A')){
+        3
     }else if(input.contains('B')){
-        output = input.replace("X","X")
-    }else{
-        output = input.replace("X","Y")
+        1
+    }else {
+        2
     }
-    return output
 }
+
+/**
+ * compute point in order to draw -> 3 + compute point of played figure
+ */
+fun makeDraw(input : String) : Int {
+    var pts = drawPoints
+    if(input.contains('A')){
+        pts+= 1
+    }else if(input.contains('B')){
+        pts+= 2
+    }else {
+        pts+= 3
+    }
+    return pts
+}
+
+
+/**
+ * compute point in order to win -> 6 + compute point of played figure
+ */
+fun makeWin(input : String) : Int {
+    var pts = victoryPoints
+    if(input.contains('A')){
+        pts+= 2
+    }else if(input.contains('B')){
+        pts+= 3
+    }else {
+        pts+= 1
+    }
+    return pts
+}
+
+const val drawPoints = 3
+const val victoryPoints = 6
 
 fun computePoints(lines : List<String>) : Int{
-    val drawPoints = 3
-    val victoryPoins = 6
+
     var points: Int = lines.count { it.contains("X") }
     points += 2 * lines.count { it.contains("Y") }
     points += 3 * lines.count { it.contains("Z") }
     points += drawPoints * lines.count { it.contains("A X") ||  it.contains("B Y") || it.contains("C Z") }
-    points += victoryPoins * lines.count { it.contains("A Y")  ||  it.contains("B Z") || it.contains("C X") }
+    points += victoryPoints * lines.count { it.contains("A Y")  ||  it.contains("B Z") || it.contains("C X") }
     return points
 }
