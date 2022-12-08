@@ -4,6 +4,6 @@ https://adventofcode.com/
 <b>Done: </b>\
 Day 1 ** \
 Day 2 ** \
-Day 3 
+Day 3  ** \ <- happy of what I proposed
 
 As Kotlin beginner, please tell me how to improve !

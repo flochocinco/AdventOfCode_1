@@ -1,7 +1,7 @@
 
 fun main() {
 
-    day2()
+    day3()
 }
 
 fun day1(){
@@ -74,12 +74,12 @@ fun makeLose(input : String) : Int {
  */
 fun makeDraw(input : String) : Int {
     var pts = drawPoints
-    if(input.contains('A')){
-        pts+= 1
+    pts += if(input.contains('A')){
+        1
     }else if(input.contains('B')){
-        pts+= 2
+        2
     }else {
-        pts+= 3
+        3
     }
     return pts
 }
@@ -90,12 +90,12 @@ fun makeDraw(input : String) : Int {
  */
 fun makeWin(input : String) : Int {
     var pts = victoryPoints
-    if(input.contains('A')){
-        pts+= 2
+    pts += if(input.contains('A')){
+        2
     }else if(input.contains('B')){
-        pts+= 3
+        3
     }else {
-        pts+= 1
+        1
     }
     return pts
 }
@@ -111,4 +111,76 @@ fun computePoints(lines : List<String>) : Int{
     points += drawPoints * lines.count { it.contains("A X") ||  it.contains("B Y") || it.contains("C Z") }
     points += victoryPoints * lines.count { it.contains("A Y")  ||  it.contains("B Z") || it.contains("C X") }
     return points
+}
+
+/**
+ * Part1: find common letter in two strings and get sum of the corresponding integer code
+ */
+fun day3() {
+    println("Advent of Code 2022 Day 3")
+    println("https://adventofcode.com/2022/day/3")
+
+    val lines = object {}.javaClass.getResourceAsStream("input_day3.txt")?.bufferedReader()?.readLines()
+
+    //Part 1
+    val priorities = populateArray(lines!!)
+    println("Part 1: Sum of the priorities: " + computePrioritiesSum(priorities))
+
+    //Part 2
+    var part2Result = 0
+    var tmp = 0
+    while(tmp < lines.size){
+        part2Result += getPriority(findCommonLetter(lines[tmp], lines[tmp+1], lines[tmp+2]))
+        tmp+=3
+    }
+    println("Part 2 : Sum of the priorities of those items: $part2Result")
+}
+
+fun computePrioritiesSum(priorities : IntArray) : Int{
+    var prioritiesSum = 0
+    var index = 0
+    while(++index < priorities.size){
+        prioritiesSum += index * priorities[index]
+    }
+    return prioritiesSum
+}
+
+/**
+ * create an array where index is the value of the priority. The array value at specific index is the number of occurrence of one letter.
+ *
+ * eg: array[2] = 3 means that 'b' ('a' is 1) has been found 3 times
+ */
+fun populateArray(lines : List<String>) : IntArray{
+    val priorities = IntArray(53) {0}
+    lines.forEach {
+        val index = getPriority(splitAndFindCommon(it))
+        priorities[index] += 1
+    }
+    return priorities
+}
+
+fun getPriority(letter : Char) : Int{
+    return if(letter.code > 97){
+        letter.code - 96
+    }else{
+        letter.code - 38
+    }
+}
+
+fun splitAndFindCommon(input: String): Char{
+    return findCommon(input.substring(0, input.length/2), input.substring(input.length/2))
+}
+
+/**
+ * find first letter present in 3 given Strings
+ */
+fun findCommonLetter(input1 : String, input2 : String, input3 : String) : Char {
+    return input1.first { input2.contains(it) && input3.contains(it) }
+}
+
+/**
+ * find first letter present in 2 given Strings
+ */
+fun findCommon(input1 : String, input2 : String) : Char{
+    return input1.first { input2.contains(it) }
 }
