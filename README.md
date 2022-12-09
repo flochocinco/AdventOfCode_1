@@ -3,6 +3,12 @@ https://adventofcode.com/
 
 As Kotlin beginner, please tell me how to improve !
 
+### For developers
+If someone wants to reuse this repo, you can use Junit Tests available in test folder.
+
+Simply create a class extending AdventCalendarDay and implement the two abstract methods.
+
+### Did so far:
 
 | Day | Stars | Difficulty | Pride |
 |-----|:-----:|-----------:|------:|

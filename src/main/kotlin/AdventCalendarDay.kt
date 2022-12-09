@@ -9,6 +9,7 @@ abstract class AdventCalendarDay(inputFileName : String) {
         println("Part2: " + part2Impl())
     }
 
-    protected abstract fun part2Impl() : Int
-    protected abstract fun part1Impl() : Int
+
+    abstract fun part1Impl() : Int
+    abstract fun part2Impl() : Int
 }
