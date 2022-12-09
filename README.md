@@ -9,6 +9,7 @@ As Kotlin beginner, please tell me how to improve !
 | 1   |  **   |          * |    :) |
 | 2   |  **   |        *** |    :/ |
 | 3   |  **   |          * |    <3 |
+| 4   |  **   |         ** |    :) |
 | 5   |       |            |       |
 | 6   |       |            |       |
 | 7   |       |            |       |
