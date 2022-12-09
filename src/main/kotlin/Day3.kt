@@ -4,22 +4,22 @@ class Day3 : AdventCalendarDay("input_day3.txt") {
     /**
      * should return 7568
      */
-    override fun part1Impl(): String {
+    override fun part1Impl(): Int {
         val priorities = populateArray(inputLines)
-        return "Sum of the priorities: " + computePrioritiesSum(priorities)
+        return computePrioritiesSum(priorities)
     }
 
     /**
      * should return 2780
      */
-    override fun part2Impl(): String {
+    override fun part2Impl(): Int {
         var part2Result = 0
         var tmp = 0
         while(tmp < inputLines.size){
             part2Result += getPriority(findCommonLetter(inputLines[tmp], inputLines[tmp+1], inputLines[tmp+2]))
             tmp+=3
         }
-        return "Sum of the priorities of those items: $part2Result"
+        return part2Result
     }
 
     /**

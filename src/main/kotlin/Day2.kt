@@ -6,7 +6,7 @@ class Day2 : AdventCalendarDay("input_day2.txt") {
     private val drawPoints = 3
     private val victoryPoints = 6
 
-    override fun part2Impl(): String {
+    override fun part2Impl(): Int {
         var pts = 0
         for(line in inputLines){
             pts += if(line.contains("X")){
@@ -18,11 +18,11 @@ class Day2 : AdventCalendarDay("input_day2.txt") {
             }
         }
 
-        return "Total Points Part 2: $pts"
+        return pts
     }
 
-    override fun part1Impl(): String {
-        return "Total Points Part 1: " + computePoints(inputLines)
+    override fun part1Impl(): Int {
+        return computePoints(inputLines)
     }
 
     private fun computePoints(lines : List<String>) : Int{

@@ -1,6 +1,6 @@
 
 class Day1 : AdventCalendarDay("input.txt") {
-    override fun part2Impl(): String {
+    override fun part2Impl(): Int {
         var amounts = mutableListOf<Int>()
         var tmp = 0
 
@@ -13,14 +13,13 @@ class Day1 : AdventCalendarDay("input.txt") {
             }
         }
 
-
         amounts.sort()
         amounts.reverse()
         amounts = amounts.subList(0, 3)//only get 1st item for part 1
-        return "Sum of the 3 first: " + amounts.sum()
+        return amounts.sum()
     }
 
-    override fun part1Impl(): String {
+    override fun part1Impl(): Int {
         TODO("Not yet implemented")
     }
 }

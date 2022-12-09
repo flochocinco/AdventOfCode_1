@@ -6,7 +6,7 @@ class Day4 : AdventCalendarDay("input_day4.txt") {
     /**
      * should return 924
      */
-    override fun part2Impl(): String {
+    override fun part2Impl(): Int {
         //split line in Range
         val pairs = inputLines.count {
             //it.split(",")[0].split("-")[0]
@@ -18,13 +18,13 @@ class Day4 : AdventCalendarDay("input_day4.txt") {
             )
             r1.overlaps(r2)
         }
-        return "Number of pairs overlapping the other: $pairs"
+        return pairs
     }
 
     /**
      * should return 562
      */
-    override fun part1Impl(): String {
+    override fun part1Impl(): Int {
         //split line in Range
         val pairs = inputLines.count {
             //it.split(",")[0].split("-")[0]
@@ -34,9 +34,9 @@ class Day4 : AdventCalendarDay("input_day4.txt") {
             val r2 = Range(
                 it.split(",")[1].split("-")[0].toInt(), it.split(",")[1].split("-")[1].toInt()
             )
-            r1.contains(r2)
+            r1.contains(r2) || r2.contains(r1)
         }
-        return "Number of pairs fully containing the other: $pairs"
+        return pairs
     }
 
      class Range constructor(private val min : Int, private val max : Int){
