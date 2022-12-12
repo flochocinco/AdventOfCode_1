@@ -12,7 +12,7 @@ class Day9Test {
 
     @org.junit.jupiter.api.Test
     fun part2Impl() {
-        //assertEquals(313200, Day8().part2Impl())
+        assertEquals(2658, Day9().part2Impl())
     }
 
 }

@@ -51,10 +51,39 @@ class Day9 : AdventCalendarDay("input_day9.txt") {
     }
 
     override fun part2Impl(): Int {
-        TODO("Not yet implemented")
+        val position = mutableSetOf<Position>()
+
+
+        //init rope
+        val rope = mutableListOf<Position>()
+        for(i in 0..10){
+            rope.add(Position(0,0))
+        }
+
+        inputLines.forEach {
+            val nb = it.split(" ")[1]
+            val direction = it.split(" ")[0]
+
+            repeat(nb.toInt()){
+                when (direction) {
+                    "D" -> rope[0].moveDown()
+                    "U" -> rope[0].moveUp()
+                    "R" -> rope[0].moveRight()
+                    "L" -> rope[0].moveLeft()
+                }
+                for(i in 1..9){
+                    if (needToMove(rope[i-1].x, rope[i-1].y, rope[i].x, rope[i].y)){
+                        rope[i].follow(rope[i-1])
+                    }
+                }
+                position.add(Position(rope[9].x, rope[9].y))
+            }
+        }
+
+        return position.size
     }
 
-    class Position(val x : Int, val y : Int) {
+    class Position(var x : Int, var y : Int) {
         override fun equals(other: Any?): Boolean {
             if(other is Position){
                 return other.x == x && other.y == y
@@ -66,6 +95,48 @@ class Day9 : AdventCalendarDay("input_day9.txt") {
             var result = x
             result = 31 * result + y
             return result
+        }
+
+        fun follow(leader : Position){
+            if(leader.x == x){
+                if(leader.y > y){
+                    y+=1
+                }else{
+                    y-=1
+                }
+                return
+            }
+            if(leader.y == y){
+                if(leader.x > x){
+                    x+=1
+                }else{
+                    x-=1
+                }
+                return
+            }
+            if(leader.y > y){
+                y+=1
+            }else{
+                y-=1
+            }
+            if(leader.x > x){
+                x+=1
+            }else{
+                x-=1
+            }
+        }
+
+        fun moveDown(){
+            y-=1
+        }
+        fun moveUp(){
+            y+=1
+        }
+        fun moveRight(){
+            x+=1
+        }
+        fun moveLeft(){
+            x-=1
         }
     }
 
