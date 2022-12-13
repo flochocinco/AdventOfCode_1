@@ -1,11 +1,11 @@
 package src.main.kotlin
 
 import AdventCalendarDay
-import java.util.Collections
 
 
+@Suppress("UNCHECKED_CAST")
 class Day13 : AdventCalendarDay("input_day13.txt") {
-    val leftStack = ArrayDeque<Any>()
+
     override fun part1Impl(): Int {
         //var left = inputLines[0]
         //var right = inputLines[1]
@@ -16,9 +16,9 @@ class Day13 : AdventCalendarDay("input_day13.txt") {
         for(i in 0..inputLines.size step 3){
             val left = createList(inputLines[i].substring(1))
             val right = createList(inputLines[i+1].substring(1))
-            if(compare(left, right)){
+            if(compare(left, right) < 0){
                 //supposed to false: 71, 78, 129
-                println(((i/3)+1))
+                //println(((i/3)+1))
                 res+=((i/3)+1)
             }
         }
@@ -34,7 +34,17 @@ class Day13 : AdventCalendarDay("input_day13.txt") {
     }
 
     override fun part2Impl(): Int {
-        TODO("Not yet implemented")
+        //sort
+        var lines = inputLines.toMutableList()
+        lines.removeIf { it.isEmpty() }
+        val dividerPacket1 = "[[2]]"
+        val dividerPacket2 = "[[6]]"
+        lines.add(dividerPacket1)
+        lines.add(dividerPacket2)
+        val packetComparator = Comparator { str1: String, str2: String -> compare(createList(str1.substring(1)), createList(str2.substring(1)))   }
+        lines = lines.sortedWith( packetComparator).toMutableList()
+        lines.forEach { println(it)}
+        return (1+lines.indexOf(dividerPacket1)) * (1+lines.indexOf(dividerPacket2))
     }
 
     private fun createList(input : String) : List<Any> {
@@ -75,9 +85,9 @@ class Day13 : AdventCalendarDay("input_day13.txt") {
         return list
     }
 
-    private fun compare(left : Any, right: Any) : Boolean{
+    private fun compare(left : Any, right: Any) : Int{
         if(left is List<*> && right is List<*>){
-            return compareLists(left as List<Int>, right as List<Int>);
+            return compareLists(left as List<Int>, right as List<Int>)
         }
         if(left is Int){
             return compare(listOf(left), right)
@@ -86,41 +96,45 @@ class Day13 : AdventCalendarDay("input_day13.txt") {
             return compare(left, listOf(right))
         }
 
-        return true
+        return -1
     }
 
     /**
      * return
      */
-    fun compareLists(left : List<Any>, right : List<Any>) : Boolean{
+    private fun compareLists(left : List<Any>, right : List<Any>) : Int{
         if(left.isEmpty()){
-            return right.isNotEmpty()
+            return if(right.isNotEmpty()){
+                -1
+            }else{
+                1
+            }
         }
         if(right.isEmpty()){
-            return false
+            return 1
         }
         for ( i in left.indices){
             if(right.size <= i){
-                return false
+                return 1
             }
             if(left[i] is Int && right[i] is Int){
                 if((left[i] as Int) < (right[i] as Int)){
-                    return true
+                    return -1
                 }
                 if((left[i] as Int) > (right[i] as Int)){
-                    return false
+                    return 1
                 }
                 continue
             }
             if(left[i] is List<*> && right[i] is List<*>){
                 val leftList : List<Any> = left[i] as List<Any>
                 val rightList : List<Any> = right[i] as List<Any>
-                if(leftList.isEmpty() && rightList.isEmpty()){
+                if(leftList == rightList){
                     continue
                 }
             }
             return compare(left[i], right[i])
         }
-        return true
+        return -1
     }
 }
