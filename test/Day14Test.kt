@@ -1,6 +1,6 @@
 package test
 
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
 import src.main.kotlin.Day14
 
 class Day14Test {
@@ -12,7 +12,7 @@ class Day14Test {
 
     @org.junit.jupiter.api.Test
     fun part2Impl() {
-        assertEquals(29025, Day14().part2Impl())
+        assertEquals(32041, Day14().part2Impl())
     }
 
 }

@@ -3,7 +3,9 @@ package src.main.kotlin
 import AdventCalendarDay
 
 class Day14 : AdventCalendarDay("input_day14.txt") {
-    val endlessVoidTrigger = 200
+    private val endlessVoidTrigger = 200
+    private var highest : Int = 0
+
     override fun part1Impl(): Int {
         val occupied = mutableSetOf<Point>()
 
@@ -19,11 +21,12 @@ class Day14 : AdventCalendarDay("input_day14.txt") {
             sandCount++
         }
 
-        return occupied.size
+        assert(sandCount != 10000)
+        return sandCount
     }
 
     private fun fallSand(occupied: MutableSet<Point>, start : Point) : Point{
-        var place = fallDown(occupied, start)
+        val place = fallDown(occupied, start)
         if(place.y > endlessVoidTrigger){
             return place
         }
@@ -44,14 +47,14 @@ class Day14 : AdventCalendarDay("input_day14.txt") {
         while(!occupied.contains(nextPoint)){
             nextPoint = Point(nextPoint.x, nextPoint.y+1)
             if(nextPoint.y > endlessVoidTrigger){
-                return nextPoint
+                return start
             }
         }
         return Point(nextPoint.x, nextPoint.y-1)
     }
 
     private fun fallDownLeft(occupied: MutableSet<Point>, start : Point) : Point{
-        var nextPoint = Point(start.x-1, start.y+1)
+        val nextPoint = Point(start.x-1, start.y+1)
         if(!occupied.contains(nextPoint)){
             return nextPoint
         }
@@ -59,7 +62,7 @@ class Day14 : AdventCalendarDay("input_day14.txt") {
     }
 
     private fun fallDownRight(occupied: MutableSet<Point>, start : Point) : Point{
-        var nextPoint = Point(start.x+1, start.y+1)
+        val nextPoint = Point(start.x+1, start.y+1)
         if(!occupied.contains(nextPoint)){
             return nextPoint
         }
@@ -78,6 +81,7 @@ class Day14 : AdventCalendarDay("input_day14.txt") {
 
     private fun storeLine(occupied: MutableSet<Point>, start : Point, to : Point){
         occupied.add(start)
+        highest = highest.coerceAtLeast(start.y)
         if(start.x == to.x){
             val coef = if(start.y > to.y){
                 -1
@@ -102,6 +106,7 @@ class Day14 : AdventCalendarDay("input_day14.txt") {
             }
         }
         occupied.add(to)
+        highest = highest.coerceAtLeast(to.y)
     }
 
     class Point(val x : Int, val y : Int){
@@ -124,6 +129,33 @@ class Day14 : AdventCalendarDay("input_day14.txt") {
     }
 
     override fun part2Impl(): Int {
-        TODO("Not yet implemented")
+        val occupied = mutableSetOf<Point>()
+
+        inputLines.forEach{ fill(occupied, it)}
+
+        //add one extra line for the imaginary floor
+        val floor = "200,${highest+2} -> 800,${highest+2}"
+        fill(occupied, floor)
+
+        var sandCount = 0
+        while(sandCount < 100000 /* guard */){
+            val place = fallSand(occupied, Point(500, 0))
+            if(place.x == 500 && place.y == 0){
+                print('[')
+                occupied.forEach { print( "${it.x}, ") }
+                print(']')
+                println()
+                print('[')
+                occupied.forEach { print( "${it.y}, ") }
+                print(']')
+                println()
+                return sandCount+1
+            }
+            occupied.add(place)
+            sandCount++
+        }
+
+        assert(sandCount != 10000)
+        return sandCount
     }
 }
