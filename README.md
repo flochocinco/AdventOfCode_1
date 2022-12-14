@@ -24,8 +24,8 @@ Simply create a class extending AdventCalendarDay and implement the two abstract
 | 10  |       |            |       |
 | 11  |       |            |       |
 | 12  |       |            |       |
-| 13  |   *   |        *** |    :( |
-| 14  |       |            |       |
+| 13  |  **   |        *** |    :( |
+| 14  |   *   |          * |    :) |
 | 15  |       |            |       |
 | 16  |       |            |       |
 | 17  |       |            |       |
