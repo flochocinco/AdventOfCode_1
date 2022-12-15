@@ -11,5 +11,5 @@ fun main() {
     day.part1()
 
     //Part 2
-    //day.part2()
+    day.part2()
 }
