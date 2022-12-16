@@ -1,3 +1,4 @@
+import java.math.BigInteger
 
 class Day5 : AdventCalendarDay("input_day5.txt"){
     override fun part1Impl(): Int {
@@ -14,7 +15,7 @@ class Day5 : AdventCalendarDay("input_day5.txt"){
         return 0
     }
 
-    override fun part2Impl(): Int {
+    override fun part2Impl(): BigInteger {
         initStack()
         inputLines.forEach {
             val nb = it.split(" ")[1].toInt()
@@ -25,7 +26,7 @@ class Day5 : AdventCalendarDay("input_day5.txt"){
         print("Last element of each stack: ")
         printStacks()
         println()
-        return 0
+        return 0.toBigInteger()
     }
 
     private var a = ArrayDeque<Char>()

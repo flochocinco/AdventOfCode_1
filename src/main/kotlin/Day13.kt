@@ -1,6 +1,7 @@
 package src.main.kotlin
 
 import AdventCalendarDay
+import java.math.BigInteger
 
 
 @Suppress("UNCHECKED_CAST")
@@ -33,7 +34,7 @@ class Day13 : AdventCalendarDay("input_day13.txt") {
         return res
     }
 
-    override fun part2Impl(): Int {
+    override fun part2Impl(): BigInteger {
         //sort
         var lines = inputLines.toMutableList()
         lines.removeIf { it.isEmpty() }
@@ -44,7 +45,7 @@ class Day13 : AdventCalendarDay("input_day13.txt") {
         val packetComparator = Comparator { str1: String, str2: String -> compare(createList(str1.substring(1)), createList(str2.substring(1)))   }
         lines = lines.sortedWith( packetComparator).toMutableList()
         lines.forEach { println(it)}
-        return (1+lines.indexOf(dividerPacket1)) * (1+lines.indexOf(dividerPacket2))
+        return ((1+lines.indexOf(dividerPacket1)) * (1+lines.indexOf(dividerPacket2))).toBigInteger()
     }
 
     private fun createList(input : String) : List<Any> {

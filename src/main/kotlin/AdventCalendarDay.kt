@@ -1,3 +1,5 @@
+import java.math.BigInteger
+
 abstract class AdventCalendarDay(inputFileName : String) {
 
     val inputLines = object {}.javaClass.getResourceAsStream(inputFileName)?.bufferedReader()?.readLines()!!
@@ -11,5 +13,5 @@ abstract class AdventCalendarDay(inputFileName : String) {
 
 
     abstract fun part1Impl() : Int
-    abstract fun part2Impl() : Int
+    abstract fun part2Impl() : BigInteger
 }

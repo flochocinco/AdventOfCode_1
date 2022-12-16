@@ -1,6 +1,7 @@
 package src.main.kotlin
 
 import AdventCalendarDay
+import java.math.BigInteger
 
 class Day8 : AdventCalendarDay("input_day8.txt") {
     override fun part1Impl(): Int {
@@ -40,7 +41,7 @@ class Day8 : AdventCalendarDay("input_day8.txt") {
         return count
     }
 
-    override fun part2Impl(): Int {
+    override fun part2Impl(): BigInteger {
         var maxScore = 1
         for(j in inputLines.indices){
             if(j == 0 || j == inputLines.size-1){
@@ -72,7 +73,7 @@ class Day8 : AdventCalendarDay("input_day8.txt") {
                 maxScore = maxScore.coerceAtLeast(score)
             }
         }
-        return maxScore
+        return maxScore.toBigInteger()
     }
 
     private fun isVisible(leftValues : List<Char>, value : Int, rightValues: List<Char>, topValues : List<Char>, bottomValues : List<Char>) : Boolean {

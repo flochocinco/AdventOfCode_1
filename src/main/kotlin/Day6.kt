@@ -1,20 +1,22 @@
+import java.math.BigInteger
+
 class Day6 : AdventCalendarDay("input_day6.txt") {
     override fun part1Impl(): Int {
-        return findPatternOfNChar(4)
+        return findPatternOfNChar(4).toInt()
     }
 
-    override fun part2Impl(): Int {
+    override fun part2Impl(): BigInteger {
         return findPatternOfNChar(14)
     }
 
-    private fun findPatternOfNChar(n : Int) : Int{
+    private fun findPatternOfNChar(n : Int) : BigInteger{
         val input = inputLines[0]
         val markerFinder = PatternFinder(n)
         var index = 0
         while(!markerFinder.add(input[index])){
             index++
         }
-        return index+1
+        return (index+1).toBigInteger()
     }
 
     class PatternFinder (private val markerLength : Int ){

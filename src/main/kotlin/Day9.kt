@@ -1,6 +1,7 @@
 package src.main.kotlin
 
 import AdventCalendarDay
+import java.math.BigInteger
 import kotlin.math.abs
 
 class Day9 : AdventCalendarDay("input_day9.txt") {
@@ -50,7 +51,7 @@ class Day9 : AdventCalendarDay("input_day9.txt") {
         return position.size
     }
 
-    override fun part2Impl(): Int {
+    override fun part2Impl(): BigInteger {
         val position = mutableSetOf<Position>()
 
 
@@ -80,7 +81,7 @@ class Day9 : AdventCalendarDay("input_day9.txt") {
             }
         }
 
-        return position.size
+        return (position.size).toBigInteger()
     }
 
     class Position(var x : Int, var y : Int) {

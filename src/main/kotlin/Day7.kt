@@ -1,6 +1,7 @@
 package src.main.kotlin
 
 import AdventCalendarDay
+import java.math.BigInteger
 
 class Day7 : AdventCalendarDay("input_day7.txt") {
 
@@ -19,7 +20,7 @@ class Day7 : AdventCalendarDay("input_day7.txt") {
         return folders.filter { it.getTotalSize() <=  100000 }.sumOf { it.getTotalSize() }
     }
 
-    override fun part2Impl(): Int {
+    override fun part2Impl(): BigInteger {
 
         //this method should be called after part1Impl
         if(root.files.isEmpty()){
@@ -45,7 +46,7 @@ class Day7 : AdventCalendarDay("input_day7.txt") {
             }
         }
 
-        return candidate.getTotalSize()
+        return candidate.getTotalSize().toBigInteger()
     }
 
     fun treatLine(line: String, currentFolder: ElfFolder?) : ElfFolder? {

@@ -1,12 +1,13 @@
 package src.main.kotlin
 
 import AdventCalendarDay
+import java.math.BigInteger
 
 class Day2 : AdventCalendarDay("input_day2.txt") {
     private val drawPoints = 3
     private val victoryPoints = 6
 
-    override fun part2Impl(): Int {
+    override fun part2Impl(): BigInteger {
         var pts = 0
         for(line in inputLines){
             pts += if(line.contains("X")){
@@ -18,7 +19,7 @@ class Day2 : AdventCalendarDay("input_day2.txt") {
             }
         }
 
-        return pts
+        return pts.toBigInteger()
     }
 
     override fun part1Impl(): Int {

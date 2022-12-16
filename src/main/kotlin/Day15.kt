@@ -1,7 +1,7 @@
 package src.main.kotlin
 
 import AdventCalendarDay
-import java.util.SortedSet
+import java.math.BigInteger
 import kotlin.math.abs
 
 class Day15 : AdventCalendarDay("input_day15.txt") {
@@ -52,23 +52,19 @@ class Day15 : AdventCalendarDay("input_day15.txt") {
         }
     }
 
-    override fun part2Impl(): Int {
-        /*val set = mutableListOf<Int>()
-        set.add(2)
-        set.add(5)
+    override fun part2Impl(): BigInteger {
+        val possibly = mutableSetOf<Int>()
 
-        addInSet(set, 5,9)
-
-        set.forEach { println("$it,") }*/
-
-        val beacons = mutableListOf<Beacon>()
         var pct = 0
-        for(i in 0 until 4000000){
-            if(i%40000 == 0){
-                pct++
+        //feeling value is after 2000000 so we going decreasing order
+        var i = 4000000
+        while(i >= 0){
+            if(i%400000 == 0 && i!=0){
+                pct+=10
                 println("$pct%")
             }
             val notInLine10 = mutableListOf<Int>()
+            val maxList = mutableListOf<Int>()
 
             inputLines.forEach {
                 val sensorX = it.split("x=")[1].split(',')[0]
@@ -79,77 +75,55 @@ class Day15 : AdventCalendarDay("input_day15.txt") {
                 val rayon = abs(sensorX.toInt()-beaconX.toInt()) + abs(sensorY.toInt()-beaconY.toInt())
 
                 if(sensorY.toInt()+rayon >= i){
-                    val x= 1+rayon- abs(i-sensorY.toInt())
-                    val max = sensorX.toInt()+x.coerceAtMost(4000000)
-                    val min = sensorX.toInt()-x.coerceAtLeast(0)
+                    val x= rayon- abs(i-sensorY.toInt())
+                    if(x >= 0){
+                        val max = (sensorX.toInt()+x).coerceAtMost(4000000)
+                        val min = (sensorX.toInt()-x).coerceAtLeast(0)
 
-                    //beacons.add(Beacon(max, i))
-                    //beacons.add(Beacon(min, i))
+                        //beacons.add(Beacon(max, i))
+                        //beacons.add(Beacon(min, i))
 
-                    addInSet(notInLine10, min, max)
-
-
-                }
-            }
-
-            if(notInLine10.size == 4){
-                return i
-            }
-
-            /*if(notInLine10.size==4000000){
-                for(x in 0 until 4000000){
-                    if(!notInLine10.contains(x)){
-                        println("x: $x, y=$i")
-                        return x*4000000+i
+                        addInSet(notInLine10, maxList, min, max)
                     }
                 }
-            }*/
+            }
+
+            val holes = mutableSetOf<Int>()
+            for(x in 0 until maxList.size){
+                for(tmp in 0 until notInLine10.size){
+                    if(notInLine10[tmp]-maxList[x]==2){
+                        //println("Found at x: ${tmp-x} ; y:$i")
+                        holes.add(notInLine10[tmp]-1)
+                    }
+                }
+            }
+            if(holes.size==1 && isInFreeSpace(notInLine10, maxList, holes.first())){
+                println("Found at x: ${holes.first()} ; y:$i")
+                val frequency : BigInteger = BigInteger("4000000").multiply(BigInteger(holes.first().toString())).add(BigInteger(i.toString()))
+                println("frequency: $frequency")
+                return frequency
+            }
+            i--
         }
 
-        return -1
+        print("val possibly = listOf(")
+        possibly.forEach { print("$it,")}
+        print(")")
+
+        return BigInteger("-1")
     }
 
-    private fun addInSet(mutableList: MutableList<Int>, min : Int, max : Int){
-        if(mutableList.isEmpty()){
-            mutableList.add(min)
-            mutableList.add(max)
-        }
-        var idx = -1
-        for(i in 0..mutableList.size-2 step 2){
-            if(min < mutableList[i]){
-                idx = i
-                mutableList.add(i, min)
-                break
+    private fun isInFreeSpace(minList: MutableList<Int>, maxList: MutableList<Int>, value : Int) : Boolean {
+        for(i in 0 until minList.size){
+            if(minList[i] <= value && value <= maxList[i]){
+                return false
             }
         }
-        if(idx != -1 && idx <= mutableList.size){
-            if(mutableList[idx+1] > max){
-                mutableList.add(idx+1, max)
-            }else{
-                mutableList.removeAt(idx+1)
-            }
-        }else if(idx == -1){
-            for(i in 1 until mutableList.size step 2){
-                if(max > mutableList[i]){
-                    if(mutableList[i] > min){
-                        mutableList.removeAt(i)
-                        mutableList.add(i, max)
-                    }else{
-                        mutableList.add(min)
-                        mutableList.add(max)
-                    }
-                    break
-                }
-            }
-        }
-        //special case
-        val intToRemove = mutableListOf<Int>()
-        for(i in 1 until mutableList.size - 2){
-            if(mutableList[i+1] - mutableList[i] <= 1){
-                intToRemove.add(mutableList[i+1])
-                intToRemove.add(mutableList[i])
-            }
-        }
-        mutableList.removeAll(intToRemove)
+        return true
+    }
+
+    private fun addInSet(minList: MutableList<Int>, maxList: MutableList<Int>, min : Int, max : Int){
+        minList.add(min)
+        maxList.add(max)
     }
 }

@@ -1,12 +1,13 @@
 package src.main.kotlin
 
 import AdventCalendarDay
+import java.math.BigInteger
 
 class Day4 : AdventCalendarDay("input_day4.txt") {
     /**
      * should return 924
      */
-    override fun part2Impl(): Int {
+    override fun part2Impl(): BigInteger {
         //split line in Range
         val pairs = inputLines.count {
             //it.split(",")[0].split("-")[0]
@@ -18,7 +19,7 @@ class Day4 : AdventCalendarDay("input_day4.txt") {
             )
             r1.overlaps(r2)
         }
-        return pairs
+        return pairs.toBigInteger()
     }
 
     /**

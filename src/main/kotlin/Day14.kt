@@ -1,6 +1,7 @@
 package src.main.kotlin
 
 import AdventCalendarDay
+import java.math.BigInteger
 
 class Day14 : AdventCalendarDay("input_day14.txt") {
     private val endlessVoidTrigger = 200
@@ -128,7 +129,7 @@ class Day14 : AdventCalendarDay("input_day14.txt") {
         }
     }
 
-    override fun part2Impl(): Int {
+    override fun part2Impl(): BigInteger {
         val occupied = mutableSetOf<Point>()
 
         inputLines.forEach{ fill(occupied, it)}
@@ -149,13 +150,13 @@ class Day14 : AdventCalendarDay("input_day14.txt") {
                 occupied.forEach { print( "${it.y}, ") }
                 print(']')
                 println()
-                return sandCount+1
+                return (sandCount+1).toBigInteger()
             }
             occupied.add(place)
             sandCount++
         }
 
         assert(sandCount != 10000)
-        return sandCount
+        return (sandCount).toBigInteger()
     }
 }

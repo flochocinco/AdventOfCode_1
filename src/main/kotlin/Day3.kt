@@ -1,3 +1,4 @@
+import java.math.BigInteger
 
 class Day3 : AdventCalendarDay("input_day3.txt") {
 
@@ -12,14 +13,14 @@ class Day3 : AdventCalendarDay("input_day3.txt") {
     /**
      * should return 2780
      */
-    override fun part2Impl(): Int {
+    override fun part2Impl(): BigInteger {
         var part2Result = 0
         var tmp = 0
         while(tmp < inputLines.size){
             part2Result += getPriority(findCommonLetter(inputLines[tmp], inputLines[tmp+1], inputLines[tmp+2]))
             tmp+=3
         }
-        return part2Result
+        return part2Result.toBigInteger()
     }
 
     /**
