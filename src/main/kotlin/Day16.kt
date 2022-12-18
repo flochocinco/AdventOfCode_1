@@ -2,7 +2,6 @@ package src.main.kotlin
 
 import AdventCalendarDay
 import java.math.BigInteger
-import kotlin.math.max
 
 class Day16 : AdventCalendarDay("input_day16.txt") {
 
@@ -36,15 +35,18 @@ class Day16 : AdventCalendarDay("input_day16.txt") {
             getAvailableNodesSorted(pressures, visited).filter { it.value > 0 }.forEach { (k,v) ->
                 var visited2 = mutableSetOf<String>()
                 var possiblePaths = mutableListOf<Set<String>>()
-                findPath(nextNode, k, paths, visited2, possiblePaths, 30-minutes)
+                findPath(visited.last(), k, paths, visited2, possiblePaths, 10)
                 if(possiblePaths.isNotEmpty()){
-                    //print("Point $k with pressure $v can be reached in ${possiblePaths.first().size} moves")
-                    val potential = (30 - minutes - possiblePaths.first().size) * v
+                    //print("Path ${possiblePaths.first()} with pressure $v can be reached in ${possiblePaths.first().size} moves")
+                    var potential = (30 - minutes - possiblePaths.first().size) * v
+                    visited2.add(k)
+                    potential += getNextPotential(visited2, pressures, 30 - minutes - possiblePaths.first().size, paths)
                     if(potential > maxPotential){
                         nextNode = k
                         maxPotential = potential
                         minutesToRemove = possiblePaths.first().size
                     }
+                    visited2.remove(k)
                     //println(" - offering a potential of $potential")
                 }else{
                     //println("Point $k with pressure $v cannot be reached in 10 moves")
@@ -52,7 +54,7 @@ class Day16 : AdventCalendarDay("input_day16.txt") {
             }
             if(nextNode != visited.last()){
                 println("Going to $nextNode spending $minutesToRemove")
-                sum += maxPotential
+                sum += (30 - minutes - minutesToRemove) * pressures[nextNode]!!
                 minutes+=minutesToRemove
                 visited.add(nextNode)
             }else{
@@ -60,6 +62,31 @@ class Day16 : AdventCalendarDay("input_day16.txt") {
             }
         }
         return sum
+    }
+
+    private fun getNextPotential(visited: MutableSet<String>, pressures : MutableMap<String, Int>, remainingTime : Int, paths : MutableMap<String, Set<String>>) : Int{
+        var nextNode = visited.last()
+        var maxPotential = 0
+        getAvailableNodesSorted(pressures, visited).filter { it.value > 0 }.forEach { (k,v) ->
+            var visited2 = mutableSetOf<String>()
+            var possiblePaths = mutableListOf<Set<String>>()
+            findPath(visited.last(), k, paths, visited2, possiblePaths, 10)
+            if(possiblePaths.isNotEmpty()){
+                //print("Path ${possiblePaths.first()} with pressure $v can be reached in ${possiblePaths.first().size} moves")
+                val potential = ( remainingTime - possiblePaths.first().size) * v
+                if(potential > maxPotential){
+                    nextNode = k
+                    maxPotential = potential
+                }
+                //println(" - offering a potential of $potential")
+            }else{
+                //println("Point $k with pressure $v cannot be reached in 10 moves")
+            }
+        }
+        if(nextNode != visited.last()){
+            visited.add(nextNode)
+        }
+        return maxPotential
     }
 
     private fun getAvailableNodesSorted(pressures : MutableMap<String, Int>, visited : Set<String>): MutableMap<String, Int> {
