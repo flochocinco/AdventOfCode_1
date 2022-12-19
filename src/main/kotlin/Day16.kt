@@ -6,13 +6,11 @@ import java.math.BigInteger
 class Day16 : AdventCalendarDay("input_day16.txt") {
 
     override fun part1Impl(): Int {
-        val opened = mutableListOf<Int>()
-        var sum = 0
+        val pathFinder = mutableMapOf<String, Set<String>>()
 
         val pressures = mutableMapOf<String, Int>()
         val paths = mutableMapOf<String, Set<String>>()
 
-        //build maps for Dijsktra
         inputLines.forEach {
             val valve = it.split(" ")[1]
             val pressure = it.split('=')[1].split(';')[0].toInt()
@@ -22,71 +20,101 @@ class Day16 : AdventCalendarDay("input_day16.txt") {
             paths[valve] = valves
         }
 
-        var minutes = 0
+        val visited = mutableSetOf<String>()
+        //visited.add("AA")
 
-        var visited = mutableSetOf<String>()
-        visited.add("AA")
-
-        while(minutes <= 30){
-            println("${30-minutes} remaining")
-            var nextNode = visited.last()
-            var maxPotential = 0
-            var minutesToRemove = 0
-            getAvailableNodesSorted(pressures, visited).filter { it.value > 0 }.forEach { (k,v) ->
-                var visited2 = mutableSetOf<String>()
-                var possiblePaths = mutableListOf<Set<String>>()
-                findPath(visited.last(), k, paths, visited2, possiblePaths, 10)
+        println("Building DFS")
+        //build pathMap
+        getAvailableNodesSorted(pressures, visited).filter { it.key == "AA" || it.value > 0 }.forEach { (first, _) ->
+            getAvailableNodesSorted(pressures, visited).filter { it.value > 0 }.forEach {(second, _) ->
+                if(first == second){
+                    return@forEach
+                }
+                val possiblePaths = mutableListOf<Set<String>>()
+                findPath(first, second, paths, mutableSetOf(), possiblePaths,10)
                 if(possiblePaths.isNotEmpty()){
-                    //print("Path ${possiblePaths.first()} with pressure $v can be reached in ${possiblePaths.first().size} moves")
-                    var potential = (30 - minutes - possiblePaths.first().size) * v
-                    visited2.add(k)
-                    potential += getNextPotential(visited2, pressures, 30 - minutes - possiblePaths.first().size, paths)
-                    if(potential > maxPotential){
-                        nextNode = k
-                        maxPotential = potential
-                        minutesToRemove = possiblePaths.first().size
-                    }
-                    visited2.remove(k)
-                    //println(" - offering a potential of $potential")
-                }else{
-                    //println("Point $k with pressure $v cannot be reached in 10 moves")
+                    pathFinder[first+second]=possiblePaths.first()
                 }
             }
-            if(nextNode != visited.last()){
-                println("Going to $nextNode spending $minutesToRemove")
-                sum += (30 - minutes - minutesToRemove) * pressures[nextNode]!!
-                minutes+=minutesToRemove
-                visited.add(nextNode)
+        }
+
+        pathFinder.any()
+
+        val openedTimed = mutableMapOf<Int, Int>()
+        /*openedTimed[20] = 3
+        openedTimed[13] = 6
+        openedTimed[21] = 10
+        openedTimed[22] = 18
+        openedTimed[3] = 22
+        openedTimed[2] = 25*/
+
+        println("Computing score")
+        val interestingNodes = getAvailableNodesSorted(pressures, visited).filter { it.value > 0 }.keys
+        val computedList = mutableSetOf<Int>()
+        var max = 0
+        var count = 100000000
+
+        var maxTheoric = 0
+        val maxs = pressures.toList().sortedBy { (_, value) -> value}.toMap().values.sortedDescending()
+        maxs.forEachIndexed { i, v ->
+            if(i > 15){
+                return@forEachIndexed
+            }
+            maxTheoric += v * (30 - (i*2))
+        }
+        println("In theory max is $maxTheoric")
+        val testList = listOf<String>("AH", "QE", "OQ", "VI", "QJ", "OS", "GJ", "EE", "SQ", "DV", "LU", "HY", "KU", "SB", "FF")
+        while(count > 0) {
+            openedTimed.clear()
+            val tmp = mutableListOf<String>()
+            //tmp.addAll(interestingNodes.shuffled())
+            tmp.addAll(testList)
+            if(!computedList.add(tmp.hashCode())){
+                continue
+            }
+            tmp.add(0, "AA")
+            var time = 0
+            for(i in 0 until tmp.size-1){
+                val src = tmp[i]
+                val dest = tmp[i+1]
+                if(pathFinder[src+dest] == null || pathFinder[src+dest]!!.isEmpty()){
+                    break
+                }
+                time += pathFinder[src+dest]!!.size
+                if(time >= 30){
+                    break
+                }
+                openedTimed[pressures[dest]!!]=time
+            }
+
+            var tmpSum = 0
+            openedTimed.forEach {
+                tmpSum += it.key * (30 - it.value)
+            }
+
+            if(tmpSum > max){
+                max = tmpSum
+                println("New local max: $max with $tmp")
+                count = 100000000
             }else{
-                break
+                count--
             }
         }
-        return sum
+
+        return max
     }
 
-    private fun getNextPotential(visited: MutableSet<String>, pressures : MutableMap<String, Int>, remainingTime : Int, paths : MutableMap<String, Set<String>>) : Int{
-        var nextNode = visited.last()
-        var maxPotential = 0
-        getAvailableNodesSorted(pressures, visited).filter { it.value > 0 }.forEach { (k,v) ->
-            var visited2 = mutableSetOf<String>()
-            var possiblePaths = mutableListOf<Set<String>>()
-            findPath(visited.last(), k, paths, visited2, possiblePaths, 10)
-            if(possiblePaths.isNotEmpty()){
-                //print("Path ${possiblePaths.first()} with pressure $v can be reached in ${possiblePaths.first().size} moves")
-                val potential = ( remainingTime - possiblePaths.first().size) * v
-                if(potential > maxPotential){
-                    nextNode = k
-                    maxPotential = potential
+    private fun List<String>.permutations(): List<List<String>> {
+        if (isEmpty()) return listOf(emptyList())
+        return indices.fold(emptyList()) { result, i ->
+            (result + (this - this[i])
+                .permutations()
+                .fold(mutableListOf()) { acc, item ->
+                    acc.add(item + this[i])
+                    acc
                 }
-                //println(" - offering a potential of $potential")
-            }else{
-                //println("Point $k with pressure $v cannot be reached in 10 moves")
-            }
+                    ).toMutableList()
         }
-        if(nextNode != visited.last()){
-            visited.add(nextNode)
-        }
-        return maxPotential
     }
 
     private fun getAvailableNodesSorted(pressures : MutableMap<String, Int>, visited : Set<String>): MutableMap<String, Int> {
@@ -105,10 +133,9 @@ class Day16 : AdventCalendarDay("input_day16.txt") {
             subVisited.add(dest)
             if(possiblePaths.isNotEmpty() && possiblePaths.first().size > subVisited.size){
                 possiblePaths.removeAt(0)
-                possiblePaths.add(subVisited)
-            }else if(possiblePaths.isEmpty()){
-                possiblePaths.add(subVisited)
             }
+            possiblePaths.add(subVisited)
+            return
         }
         for(tmp in paths[src]!!){
             if(visited.contains(tmp) || tmp == dest){
