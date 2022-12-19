@@ -51,8 +51,9 @@ class Day16 : AdventCalendarDay("input_day16.txt") {
         println("Computing score")
         val interestingNodes = getAvailableNodesSorted(pressures, visited).filter { it.value > 0 }.keys
         val computedList = mutableSetOf<Int>()
+        //computedList.addAll(interestingNodes)
         var max = 0
-        var count = 100000000
+        var count = 100000000000
 
         var maxTheoric = 0
         val maxs = pressures.toList().sortedBy { (_, value) -> value}.toMap().values.sortedDescending()
@@ -64,14 +65,17 @@ class Day16 : AdventCalendarDay("input_day16.txt") {
         }
         println("In theory max is $maxTheoric")
         val testList = listOf<String>("AH", "QE", "OQ", "VI", "QJ", "OS", "GJ", "EE", "SQ", "DV", "LU", "HY", "KU", "SB", "FF")
+
+        //var possibilities = computedList.permutations()
+
         while(count > 0) {
             openedTimed.clear()
             val tmp = mutableListOf<String>()
-            //tmp.addAll(interestingNodes.shuffled())
-            tmp.addAll(testList)
-            if(!computedList.add(tmp.hashCode())){
+            tmp.addAll(interestingNodes.shuffled())
+            //tmp.addAll(testList)
+            /*if(!computedList.add(tmp.hashCode())){
                 continue
-            }
+            }*/
             tmp.add(0, "AA")
             var time = 0
             for(i in 0 until tmp.size-1){
@@ -95,7 +99,7 @@ class Day16 : AdventCalendarDay("input_day16.txt") {
             if(tmpSum > max){
                 max = tmpSum
                 println("New local max: $max with $tmp")
-                count = 100000000
+                count = 100000000000
             }else{
                 count--
             }
