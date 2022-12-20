@@ -12,4 +12,5 @@ fun main() {
 
     //Part 2
     //day.part2()
+
 }

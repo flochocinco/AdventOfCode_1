@@ -11,14 +11,18 @@ class Day16Test {
     @org.junit.jupiter.api.Test
     fun part1Impl() {
         val elapsed = measureTime {
-            assertEquals(1651, Day16().part1Impl())
+            assertEquals(1728, Day16().part1Impl())
         }
         println("Computed in $elapsed")
     }
 
+    @OptIn(ExperimentalTime::class)
     @org.junit.jupiter.api.Test
     fun part2Impl() {
-        //assertEquals(32041, Day15().part2Impl())
+        val elapsed = measureTime {
+            assertEquals(2304, Day16().part2Impl().toInt())
+        }
+        println("Part 2 computed in $elapsed")
     }
 
 }

@@ -4,38 +4,38 @@ https://adventofcode.com/
 As Kotlin beginner, please tell me how to improve !
 
 ### For developers
-If someone wants to reuse this repo, you can use Junit Tests available in test folder.
+If someone wants to reuse this repo, you can src.main.kotlin.Utils.use Junit Tests available in test folder.
 
 Simply create a class extending AdventCalendarDay and implement the two abstract methods.
 
 ### Did so far:
 
-| Day | Stars | Difficulty | Pride |
-|-----|:-----:|-----------:|------:|
-| 1   |  **   |          * |    :) |
-| 2   |  **   |        *** |    :/ |
-| 3   |  **   |          * |    <3 |
-| 4   |  **   |         ** |    :) |
-| 5   |  **   |          * |    <3 |
-| 6   |  **   |          * |    <3 |
-| 7   |  **   |        *** |    <3 |
-| 8   |  **   |         ** |    :( |
-| 9   |   *   |         ** |    :) |
-| 10  |       |            |       |
-| 11  |       |            |       |
-| 12  |       |            |       |
-| 13  |  **   |        *** |    :( |
-| 14  |  **   |         ** |    :) |
-| 15  |  **   |        *** |    :) | 
-| 16  |       |            |       |
-| 17  |       |            |       |
-| 18  |       |            |       |
-| 19  |       |            |       |
-| 20  |       |            |       |
-| 21  |       |            |       |
-| 22  |       |            |       |
-| 23  |       |            |       |
-| 24  |       |            |       |
+| Day |        Stars        |          Difficulty |                                         Pride |
+|-----|:-------------------:|--------------------:|----------------------------------------------:|
+| 1   |    :star::star:     |              :star: |                                            :) |
+| 2   |    :star::star:     |  :star::star::star: |                                            :/ |
+| 3   |    :star::star:     |              :star: |                                            <3 |
+| 4   |    :star::star:     |        :star::star: |                                            :) |
+| 5   |    :star::star:     |              :star: |                                            <3 |
+| 6   |    :star::star:     |              :star: |                                            <3 |
+| 7   |    :star::star:     |  :star::star::star: |                                            <3 |
+| 8   |    :star::star:     |        :star::star: |                                            :( |
+| 9   |    :star::star:     |        :star::star: |                                            :) |
+| 10  |                     |                     |                                               |
+| 11  |                     |                     |                                               |
+| 12  |                     |                     |                                               |
+| 13  |    :star::star:     |  :star::star::star: |                                            :( |
+| 14  |    :star::star:     |        :star::star: |                                            :) |
+| 15  |    :star::star:     |  :star::star::star: |                                            :) | 
+| 16  |    :star::star:     |  :star::star::star: | shame (not my code: credit goes to zanmagerl) |
+| 17  |                     |                     |                                               |
+| 18  |                     |                     |                                               |
+| 19  |                     |                     |                                               |
+| 20  |                     |                     |                                               |
+| 21  |                     |                     |                                               |
+| 22  |                     |                     |                                               |
+| 23  |                     |                     |                                               |
+| 24  |                     |                     |                                               |
 
 
 
