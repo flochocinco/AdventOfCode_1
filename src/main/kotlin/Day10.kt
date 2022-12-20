@@ -14,8 +14,9 @@ class Day10 : AdventCalendarDay("input_day10.txt") {
             when (it.split(" ")[0]) {
                 "noop" -> counter = increaseCounter(counter, signalStrength, register)
                 "addx" -> {
-                    counter = increaseCounter(counter, signalStrength, register)
-                    counter = increaseCounter(counter, signalStrength, register)
+                    repeat(2) {
+                        counter = increaseCounter(counter, signalStrength, register)
+                    }
                     register += it.split(" ")[1].toInt()
                 }
             }
