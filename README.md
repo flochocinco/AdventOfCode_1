@@ -10,32 +10,32 @@ Simply create a class extending AdventCalendarDay and implement the two abstract
 
 ### Did so far:
 
-| Day |        Stars        |          Difficulty |                                         Pride |
-|-----|:-------------------:|--------------------:|----------------------------------------------:|
-| 1   |    :star::star:     |              :star: |                                            :) |
-| 2   |    :star::star:     |  :star::star::star: |                                            :/ |
-| 3   |    :star::star:     |              :star: |                                            <3 |
-| 4   |    :star::star:     |        :star::star: |                                            :) |
-| 5   |    :star::star:     |              :star: |                                            <3 |
-| 6   |    :star::star:     |              :star: |                                            <3 |
-| 7   |    :star::star:     |  :star::star::star: |                                            <3 |
-| 8   |    :star::star:     |        :star::star: |                                            :( |
-| 9   |    :star::star:     |        :star::star: |                                            :) |
-| 10  |                     |                     |                                               |
-| 11  |                     |                     |                                               |
-| 12  |                     |                     |                                               |
-| 13  |    :star::star:     |  :star::star::star: |                                            :( |
-| 14  |    :star::star:     |        :star::star: |                                            :) |
-| 15  |    :star::star:     |  :star::star::star: |                                            :) | 
-| 16  |    :star::star:     |  :star::star::star: | shame (not my code: credit goes to zanmagerl) |
-| 17  |                     |                     |                                               |
-| 18  |                     |                     |                                               |
-| 19  |                     |                     |                                               |
-| 20  |                     |                     |                                               |
-| 21  |                     |                     |                                               |
-| 22  |                     |                     |                                               |
-| 23  |                     |                     |                                               |
-| 24  |                     |                     |                                               |
+| Day |        Stars        |          Difficulty |                                                                          Pride |
+|-----|:-------------------:|--------------------:|-------------------------------------------------------------------------------:|
+| 1   |    :star::star:     |              :star: |                                                                       :smiley: |
+| 2   |    :star::star:     |  :star::star::star: |                                                                     :confused: |
+| 3   |    :star::star:     |              :star: |                                                                    :heartbeat: |
+| 4   |    :star::star:     |        :star::star: |                                                                       :smiley: |
+| 5   |    :star::star:     |              :star: |                                                                    :heartbeat: |
+| 6   |    :star::star:     |              :star: |                                                                    :heartbeat: |
+| 7   |    :star::star:     |  :star::star::star: |                                                                    :heartbeat: |
+| 8   |    :star::star:     |        :star::star: |                                                                     :confused: |
+| 9   |    :star::star:     |        :star::star: |                                                                       :smiley: |
+| 10  |                     |                     |                                                                                |
+| 11  |                     |                     |                                                                                |
+| 12  |                     |                     |                                                                                |
+| 13  |    :star::star:     |  :star::star::star: |                                                                     :confused: |
+| 14  |    :star::star:     |        :star::star: |                                                                       :smiley: |
+| 15  |    :star::star:     |  :star::star::star: |                                                                       :smiley: | 
+| 16  |    :star::star:     |  :star::star::star: |                                  shame (not my code: credit goes to zanmagerl) |
+| 17  |                     |                     |                                                                                |
+| 18  |                     |                     |                                                                                |
+| 19  |                     |                     |                                                                                |
+| 20  |                     |                     |                                                                                |
+| 21  |                     |                     |                                                                                |
+| 22  |                     |                     |                                                                                |
+| 23  |                     |                     |                                                                                |
+| 24  |                     |                     |                                                                                |
 
 
 
