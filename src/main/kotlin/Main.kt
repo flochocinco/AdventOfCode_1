@@ -1,16 +1,16 @@
-import src.main.kotlin.Day16
+import src.main.kotlin.Day10
 
 fun main() {
 
     println("Advent of Code 2022")
     println("https://adventofcode.com/2022/day/XXXXX")
 
-    val day = Day16()
+    val day = Day10()
 
     //Part 2
     day.part1()
 
     //Part 2
-    //day.part2()
+    day.part2()
 
 }
