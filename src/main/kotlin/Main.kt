@@ -1,4 +1,4 @@
-import src.main.kotlin.Day12
+import src.main.kotlin.Day17
 
 fun main() {
 
@@ -6,7 +6,7 @@ fun main() {
     println("https://adventofcode.com/2022/day/XXXXX")
 
 
-    val day = Day12()
+    val day = Day17()
     day.part1()
 
     //Part 2

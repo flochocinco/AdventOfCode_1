@@ -110,7 +110,7 @@ class Day14 : AdventCalendarDay("input_day14.txt") {
         highest = highest.coerceAtLeast(to.y)
     }
 
-    open class Point(val x : Int, val y : Int){
+    open class Point(var x : Int, var y : Int){
         override fun toString(): String {
             return "x: $x ; y: $y"
         }
