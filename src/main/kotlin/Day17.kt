@@ -4,7 +4,7 @@ import AdventCalendarDay
 import java.math.BigInteger
 
 class Day17 : AdventCalendarDay("input_day17.txt") {
-    private var pieceCounter = 0
+
     override fun part1Impl(): Int {
         val tower = Tower()
 
@@ -14,7 +14,7 @@ class Day17 : AdventCalendarDay("input_day17.txt") {
         }
         val numberOfInputs = inputLines[0].length
         var round = 0
-        while(pieceCounter < 2022){
+        while(tower.pieces < 2022){
             val c = inputLines[0][round%numberOfInputs]
             if(c == '<'){
                 shape.moveLeft(tower)
@@ -23,7 +23,7 @@ class Day17 : AdventCalendarDay("input_day17.txt") {
             }
             if(!shape.canMoveDown(tower)){
                 tower.addShape(shape)
-                shape = getNextShape(++pieceCounter, tower.size()+3)
+                shape = getNextShape(tower.pieces, tower.size()+3)
                 repeat(shape.getHeight()+3){
                     tower.createLine()
                 }
@@ -42,6 +42,7 @@ class Day17 : AdventCalendarDay("input_day17.txt") {
     }
 
     class Tower {
+        var pieces = 0L
         val data = mutableListOf<Array<Int>>()
         fun createLine() {
             data.add(Array(7){0})
@@ -55,6 +56,7 @@ class Day17 : AdventCalendarDay("input_day17.txt") {
             shape.points.forEach {
                 data[it.y][it.x] = 1
             }
+            pieces += 1
         }
 
         fun print(){
@@ -87,12 +89,12 @@ class Day17 : AdventCalendarDay("input_day17.txt") {
         TODO("Not yet implemented")
     }
 
-    private fun getNextShape(counter : Int, height : Int) : Shape{
+    private fun getNextShape(counter : Long, height : Int) : Shape{
         return when(counter%5){
-            0 -> createHLine(height)
-            1-> createStar(height)
-            2 -> createL(height)
-            3 -> createVLine(height)
+            0L -> createHLine(height)
+            1L-> createStar(height)
+            2L -> createL(height)
+            3L -> createVLine(height)
             else -> createSquare(height)
         }
     }
