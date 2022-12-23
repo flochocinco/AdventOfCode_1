@@ -36,7 +36,7 @@ class Day17 : AdventCalendarDay("input_day17.txt") {
 
         println("Final State")
         tower.cleanEmptyLines()
-        tower.print()
+        //tower.print()
 
         return tower.size()
     }
