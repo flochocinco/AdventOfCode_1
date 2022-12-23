@@ -28,7 +28,7 @@ Simply create a class extending AdventCalendarDay and implement the two abstract
 | 14  |                     :star::star:                     |                             :star::star: |                                                         :smiley: |
 | 15  |                     :star::star:                     |                       :star::star::star: |                                                         :smiley: | 
 | 16  |                     :star::star:                     |                       :star::star::star: |                    shame (not my code: credit goes to zanmagerl) |
-| 17  |                                                      |                                          |                                                                  |
+| 17  |                        :star:                        |                                          |                                                                  |
 | 18  |                                                      |                                          |                                                                  |
 | 19  |                                                      |                                          |                                                                  |
 | 20  |                                                      |                                          |                                                                  |
