@@ -4,52 +4,48 @@ import AdventCalendarDay
 import java.math.BigInteger
 
 class Day17 : AdventCalendarDay("input_day17.txt") {
-    var pieceCounter = 0
+    private var pieceCounter = 0
     override fun part1Impl(): Int {
         val tower = mutableListOf<Array<Int>>()
-
-        /*repeat(3){
-            tower.add(createLine())
-        }*/
 
         var nextShape = getNextShape(0, 3)
         repeat(4){
             tower.add(createLine())
         }
-        inputLines.forEach { line ->
-            line.toCharArray().forEachIndexed {idx, c ->
-                if(c == '<'){
-                    nextShape.moveLeft(tower)
-                }else if(c == '>'){
-                    nextShape.moveRight(tower)
+        val numberOfInputs = inputLines[0].length
+        var round = 0
+        while(pieceCounter < 2022){
+            val c = inputLines[0][round%numberOfInputs]
+            if(c == '<'){
+                nextShape.moveLeft(tower)
+            }else if(c == '>'){
+                nextShape.moveRight(tower)
+            }
+            if(!nextShape.canMoveDown(tower)){
+                addInTower(nextShape, tower)
+                nextShape = getNextShape(++pieceCounter, tower.size+3)
+                repeat(nextShape.getHeight()+3){
+                    tower.add(createLine())
                 }
-                if(!nextShape.canMoveDown(tower)){
-                    addInTower(nextShape, tower)
-                    nextShape = getNextShape(++pieceCounter, tower.size+3/*3-1 since tower starts from 0*/)
-                    repeat(nextShape.getHeight()+3){
-                        tower.add(createLine())
-                    }
-                    //addInTower(nextShape, tower)
-                    println("Round $idx")
-                    printTower(tower)
-                }else{
-                    nextShape.moveDown()
+            }else{
+                nextShape.moveDown()
+                if(tower.last().all { it == 0 }){
                     tower.removeLast()
-                    //addInTower(nextShape, tower)
-                    //printTower(tower)
                 }
             }
+            round++
         }
 
-        //addInTower(nextShape, tower)
+        println("Final State")
 
+        tower.removeIf { it.all { place -> place == 0 } }
         printTower(tower)
 
-        return 0
+        return tower.size
     }
 
     private fun createLine(): Array<Int> {
-        return Array(7){0};
+        return Array(7){0}
     }
 
     private fun addInTower(shape : Shape, tower : List<Array<Int>>){
@@ -59,10 +55,13 @@ class Day17 : AdventCalendarDay("input_day17.txt") {
     }
 
     private fun printTower(tower : List<Array<Int>>){
-        tower.reversed().forEach {
+        tower.reversed().forEachIndexed { idx, it ->
             print('|')
             it.forEach {pos ->  if(pos==0){print('.')}else{print('#') }}
             print('|')
+            if(idx%10==0){
+                print(" ${tower.size-idx}")
+            }
             println()
         }
         println("+-------+")
@@ -154,8 +153,8 @@ class Day17 : AdventCalendarDay("input_day17.txt") {
      */
     private fun createVLine(lowestHeight : Int) : Shape{
         return Shape(listOf(Day14.Point(2,lowestHeight+3),
-                            Day14.Point(4,lowestHeight+2),
-                            Day14.Point(4,lowestHeight+1),
+                            Day14.Point(2,lowestHeight+2),
+                            Day14.Point(2,lowestHeight+1),
                             Day14.Point(2,lowestHeight)))
     }
 
